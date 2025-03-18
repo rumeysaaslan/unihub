@@ -1,0 +1,101 @@
+"use client"
+
+import * as React from "react"
+import { Check, ChevronsUpDown } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from "@/components/ui/command"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+import { createClient } from "@/utils/supabase/client"
+import { Dispatch } from "react"
+interface City {
+    id: number,
+    name: string,
+}
+
+ interface Props{
+    selectedCityId:number,
+    setSelectedCityId: Dispatch<React.SetStateAction<number>>
+ }
+export function CitySelection({selectedCityId,setSelectedCityId}:Props) {
+    const [open, setOpen] = React.useState(false)
+    const [cities, setCities] = React.useState<City[]>([])
+    const supabase = createClient()
+
+    React.useEffect(() => {
+        const getCities = async () => {
+            const { data, error } = await supabase.from('cities').select("*")
+            console.log(data)
+            if (data) {
+                setCities(data)
+            }
+            else {
+                console.log("error", error)
+            }
+        }
+        getCities()
+    }, [supabase])
+
+
+    return (
+        <div className="">
+            <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                    <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={open}
+                        className="w-auto justify-between"
+                    >
+                        {selectedCityId
+                            ? cities.find((city) => city.id === selectedCityId)?.name
+                            : "il secimi yapin"}
+                        <ChevronsUpDown className="opacity-50" />
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[200px] p-0">
+                    <Command>
+                        <CommandInput placeholder="il secimi yapin" />
+                        <CommandList>
+                            <CommandEmpty>No framework found.</CommandEmpty>
+                            <CommandGroup>
+                                {cities.map((city) => (
+                                    <CommandItem
+                                        key={city.name}
+                                        value={city.id.toString()}
+                                        onSelect={(currentValue) => {
+                                            if (selectedCityId !== Number(currentValue)) {
+                                                setSelectedCityId(Number(currentValue))
+                                                setOpen(false)
+                                            }
+                                        }}
+                                    >
+                                        {city.name}
+                                        <Check
+                                            className={cn(
+                                                "ml-auto",
+                                                selectedCityId === city.id ? "opacity-100" : "opacity-0"
+                                            )}
+                                        />
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                        </CommandList>
+                    </Command>
+                </PopoverContent>
+            </Popover>
+        </div>
+    )
+}
