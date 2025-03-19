@@ -50,7 +50,7 @@ export function MealCarousel({ selectedMeal, selectedCityId }: Props) {
             <div className="p-1">
               <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{selectedMeal === "Breakfast" ? m.Kahvalti : m.Aksam_yemegi}</span>
+                  <span className="text-2xl font-semibold">{selectedMeal === "Breakfast" ? m.Kahvalti : m.Aksam_yemegi}</span>
                 </CardContent>
               </Card>
             </div>
