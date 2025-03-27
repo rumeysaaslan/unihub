@@ -3,11 +3,7 @@ import * as React from "react"
 
 
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel"
+
 export interface Meal {
   date: string,
   recipes: string[]
