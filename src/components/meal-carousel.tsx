@@ -15,9 +15,8 @@ interface Meal {
   city_id: number,
   Kahvalti: string,
   Aksam_yemegi: string,
-
-
 }
+
 interface Props {
   selectedMeal: "Breakfast" | "Dinner"
   selectedCityId: number
@@ -28,7 +27,9 @@ export function MealCarousel({ selectedMeal, selectedCityId }: Props) {
 
   React.useEffect(() => {
     const getMeal = async () => {
-      const { data, error } = await supabase.from("meals").select("*").eq("city_id", selectedCityId)
+      const now = new Date();
+      const dateAsString = now.toISOString()
+      const { data, error } = await supabase.from("meals").select("*").eq("city_id", selectedCityId).eq("date", dateAsString)
       if (data) {
         setMeal(data)
       }
@@ -39,8 +40,6 @@ export function MealCarousel({ selectedMeal, selectedCityId }: Props) {
     }
     getMeal()
   }, [selectedCityId, supabase])
-
-
 
   return (
     <Carousel className="w-full max-w-xs">

@@ -8,9 +8,9 @@ interface Props {
 
 export function MealSelection({ selectedMeal, setSelectedMeal }:Props) {
     return (
-        <div className="flex space-x-2">
+        <div className="flex space-x-1">
             <Label htmlFor="mealSelection">Kahvaltı</Label>
-            <Switch checked={selectedMeal==="Dinner"} onCheckedChange={(checked) => { setSelectedMeal(checked?"Dinner":"Breakfast") }} id="mealSelection" />
+            <Switch style={{marginTop:"7px"}} checked={selectedMeal==="Dinner"} onCheckedChange={(checked) => { setSelectedMeal(checked?"Dinner":"Breakfast") }} id="mealSelection" />
             <Label htmlFor="mealSelection">Akşam Yemeği</Label>
         </div>
     )

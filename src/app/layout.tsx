@@ -33,12 +33,13 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="Light"
           enableSystem
           disableTransitionOnChange
         >
           <main>
             <Header />
+            
             {children}
           </main>
         </ThemeProvider>

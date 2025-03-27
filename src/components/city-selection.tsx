@@ -20,16 +20,16 @@ import {
 } from "@/components/ui/popover"
 import { createClient } from "@/utils/supabase/client"
 import { Dispatch } from "react"
-interface City {
+ export interface City {
     id: number,
     name: string,
 }
 
- interface Props{
-    selectedCityId:number,
-    setSelectedCityId: Dispatch<React.SetStateAction<number>>
- }
-export function CitySelection({selectedCityId,setSelectedCityId}:Props) {
+interface Props {
+    selectedCity: City|undefined,
+    setSelectedCity: Dispatch<React.SetStateAction<City|undefined>>
+}
+export function CitySelection({ selectedCity, setSelectedCity }: Props) {
     const [open, setOpen] = React.useState(false)
     const [cities, setCities] = React.useState<City[]>([])
     const supabase = createClient()
@@ -59,8 +59,8 @@ export function CitySelection({selectedCityId,setSelectedCityId}:Props) {
                         aria-expanded={open}
                         className="w-auto justify-between"
                     >
-                        {selectedCityId
-                            ? cities.find((city) => city.id === selectedCityId)?.name
+                        {selectedCity
+                            ? cities.find((city) => city.id === selectedCity.id)?.name
                             : "il secimi yapin"}
                         <ChevronsUpDown className="opacity-50" />
                     </Button>
@@ -76,8 +76,8 @@ export function CitySelection({selectedCityId,setSelectedCityId}:Props) {
                                         key={city.name}
                                         value={city.id.toString()}
                                         onSelect={(currentValue) => {
-                                            if (selectedCityId !== Number(currentValue)) {
-                                                setSelectedCityId(Number(currentValue))
+                                            if (selectedCity?.id!== Number(currentValue)) {
+                                                setSelectedCity(cities.find(x=>x.id==Number(currentValue)))
                                                 setOpen(false)
                                             }
                                         }}
@@ -86,7 +86,7 @@ export function CitySelection({selectedCityId,setSelectedCityId}:Props) {
                                         <Check
                                             className={cn(
                                                 "ml-auto",
-                                                selectedCityId === city.id ? "opacity-100" : "opacity-0"
+                                                selectedCity?.id === city.id ? "opacity-100" : "opacity-0"
                                             )}
                                         />
                                     </CommandItem>
