@@ -1,10 +1,19 @@
+"use server"
 import DataCollect from '@/components/data-collect'
 import React from 'react'
+interface Params {
+  cityName: string,
+  cityId: number,
+  meal: "Breakfast" | "Dinner",
+  saveToDo: string
+}
 
-const FullMeal = () => {
+const FullMeal = async ({ searchParams }: { searchParams: Params }) => {
+  const { cityName, cityId, meal, saveToDo } = await searchParams;
+
   return (
     <div >
-      <DataCollect selectedMeal='Breakfast' selectedCityName='istanbul' />
+      <DataCollect saveToDo={saveToDo === "true"} selectedMeal={meal} selectedCityId={cityId} selectedCityName={cityName} />
     </div>
   )
 }

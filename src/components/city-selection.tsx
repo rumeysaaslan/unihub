@@ -20,14 +20,14 @@ import {
 } from "@/components/ui/popover"
 import { createClient } from "@/utils/supabase/client"
 import { Dispatch } from "react"
- export interface City {
+export interface City {
     id: number,
     name: string,
 }
 
 interface Props {
-    selectedCity: City|undefined,
-    setSelectedCity: Dispatch<React.SetStateAction<City|undefined>>
+    selectedCity: City | undefined,
+    setSelectedCity: Dispatch<React.SetStateAction<City | undefined>>
 }
 export function CitySelection({ selectedCity, setSelectedCity }: Props) {
     const [open, setOpen] = React.useState(false)
@@ -40,6 +40,7 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
             console.log(data)
             if (data) {
                 setCities(data)
+
             }
             else {
                 console.log("error", error)
@@ -47,6 +48,7 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
         }
         getCities()
     }, [supabase])
+
 
 
     return (
@@ -76,9 +78,13 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
                                         key={city.name}
                                         value={city.id.toString()}
                                         onSelect={(currentValue) => {
-                                            if (selectedCity?.id!== Number(currentValue)) {
-                                                setSelectedCity(cities.find(x=>x.id==Number(currentValue)))
-                                                setOpen(false)
+                                            if (selectedCity?.id !== Number(currentValue)) {
+                                                const city = cities.find(x => x.id == Number(currentValue))
+                                                if (city) {
+                                                    setSelectedCity(city)
+                                                    setOpen(false)
+                                                    localStorage.setItem("selectedCity", JSON.stringify(city))
+                                                }
                                             }
                                         }}
                                     >
