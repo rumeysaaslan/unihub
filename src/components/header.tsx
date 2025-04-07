@@ -1,6 +1,6 @@
 import Image from "next/image"
 import React from 'react'
-import Logo from "../../public/Hype..png"
+import Logo from "../../public/Hype. (1).png"
 
 import { ModeToggle } from "./mode-toggle"
 import Link from "next/link"
