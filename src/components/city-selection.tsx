@@ -62,7 +62,7 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
                         className="w-auto justify-between"
                     >
                         {selectedCity
-                            ? cities.find((city) => city.id === selectedCity.id)?.name
+                            ? cities.find((city) => city.name === selectedCity.name)?.name
                             : "il secimi yapin"}
                         <ChevronsUpDown className="opacity-50" />
                     </Button>
@@ -76,10 +76,10 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
                                 {cities.map((city) => (
                                     <CommandItem
                                         key={city.name}
-                                        value={city.id.toString()}
+                                        value={city.name}
                                         onSelect={(currentValue) => {
-                                            if (selectedCity?.id !== Number(currentValue)) {
-                                                const city = cities.find(x => x.id == Number(currentValue))
+                                            if (selectedCity?.name !== currentValue) {
+                                                const city = cities.find(x => x.name == currentValue)
                                                 if (city) {
                                                     setSelectedCity(city)
                                                     setOpen(false)
@@ -92,7 +92,7 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
                                         <Check
                                             className={cn(
                                                 "ml-auto",
-                                                selectedCity?.id === city.id ? "opacity-100" : "opacity-0"
+                                                selectedCity?.name === city.name ? "opacity-100" : "opacity-0"
                                             )}
                                         />
                                     </CommandItem>
