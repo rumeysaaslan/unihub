@@ -14,6 +14,7 @@ function YurtLinkPage() {
 
 
         <Link
+          target='blank'
           href="https://www.trendyol.com/koleksiyonlar/yurt-link-k-2485ae41-ab53-4930-b31f-57d3d23aad26?shared=true&adjust_t=mga6qru_4lumnip&adjust_tracker_limit=999999999&utm_source=collection&utm_medium=ios_collection_free&adjust_campaign=ios_collection_free&adjust_creative=2485ae41-ab53-4930-b31f-57d3d23aad26&utm_term=2485ae41-ab53-4930-b31f-57d3d23aad26&adjust_adgroup=18226887&utm_campaign=18226887"
           style={{
             zIndex: '2',
