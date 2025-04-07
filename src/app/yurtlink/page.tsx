@@ -29,10 +29,8 @@ function YurtLinkPage() {
             marginTop: '-13rem',   // mt-6
             transition: 'background-color 0.3s ease', // transition
           }}
-
         >
-
-          Ürun Linkleri
+          Ürün Linkleri
         </Link>
 
       </div>
