@@ -1,15 +1,15 @@
 "use server"
 import DataCollect from '@/components/data-collect'
 import React from 'react'
-interface Params {
-  cityName: string,
-  cityId: number,
-  meal: "Breakfast" | "Dinner",
-  saveToDo: string
-}
+// interface Params {
+//   cityName: string,
+//   cityId: number,
+//   meal: "Breakfast" | "Dinner",
+//   saveToDo: string
+// }
 
-const FullMeal = async ({ searchParams }: { searchParams: Params }) => {
-  const { cityName, cityId, meal, saveToDo } = await searchParams;
+const FullMeal = async ({ searchParams }: never) => {
+  const { cityName, cityId, meal, saveToDo } = searchParams;
 
   return (
     <div >

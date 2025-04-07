@@ -2,7 +2,6 @@ import Link from 'next/link'
 import React from 'react'
 import kykodafoto from "../../../public/kyk (1).png"
 import Image from 'next/image'
-import { BiSolidBowlHot } from "react-icons/bi";
 
 function YurtLinkPage() {
   return (
@@ -33,7 +32,7 @@ function YurtLinkPage() {
 
         >
 
-          Ürun Linkleri <BiSolidBowlHot />
+          Ürun Linkleri
         </Link>
 
       </div>
