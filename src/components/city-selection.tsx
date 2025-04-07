@@ -71,7 +71,7 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
                     <Command>
                         <CommandInput placeholder="il secimi yapin" />
                         <CommandList>
-                            <CommandEmpty>No framework found.</CommandEmpty>
+                            <CommandEmpty>Şehir bulunamadı.</CommandEmpty>
                             <CommandGroup>
                                 {cities.map((city) => (
                                     <CommandItem
