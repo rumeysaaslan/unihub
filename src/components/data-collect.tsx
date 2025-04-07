@@ -2,7 +2,6 @@
 import { JSDOM } from "jsdom"
 import * as React from "react"
 
-
 import { Card, CardContent } from "@/components/ui/card"
 import { createClient } from "@/utils/supabase/client"
 
@@ -41,8 +40,9 @@ function turkishDateToJSDate(turkishDateStr: string) {
   const month = months[monthName];
 
   // Date nesnesi oluştur (Aylar 0 tabanlı olduğu için month zaten uygun)
-  return new Date(Number(year), month, Number(day));
+  return new Date(Number(year), month, Number(day), 12, 0, 0);
 }
+
 export const DataCollect: React.FC<Props> = async ({ selectedCityName, selectedCityId, saveToDo }: Props) => {
 
   const mealTypes = [true, false]
@@ -83,7 +83,7 @@ export const DataCollect: React.FC<Props> = async ({ selectedCityName, selectedC
       }
     })
   }
-  console.log(meals)
+
   if (saveToDo) {
     const supabase = createClient()
     for (const meal of meals) {
