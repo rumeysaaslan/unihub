@@ -1,5 +1,5 @@
 import React from "react";
-import '../blog/page.css'
+import '../needs/page.css'
 
 const YurtEsyalariBlog = () => {
   return (
