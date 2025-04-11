@@ -96,10 +96,10 @@ export const DataCollect: React.FC<Props> = async ({ selectedCityName, selectedC
     }
   }
   return (
-    <div className="flex relative  flex-wrap p-2.5 ml-8 ">{meals.map((item, index: number) => (
+    <div  className="flex relative flex-wrap p-2.5 ml-8 ">{meals.map((item, index: number) => (
       <div key={index.toString()} className="m-3   ">
         <Card>
-          <CardContent className="flex aspect-square h-128 overflow-scroll items-center justify-center p-6 md:p-18">
+          <CardContent  className="flex aspect-square h-128 overflow-scroll items-center justify-center p-6 md:p-18">
             <ol className="text-3xl font-semibold list-disc">{item.date}{item.breakfast.map((li, index) => (
               <li className="" key={index}>
                 {li}</li>

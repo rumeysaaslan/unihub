@@ -12,7 +12,7 @@ const FullMeal = async ({ searchParams }: never) => {
   const { cityName, cityId, meal, saveToDo } = searchParams;
 
   return (
-    <div >
+    <div  >
       <DataCollect saveToDo={saveToDo === "true"} selectedMeal={meal} selectedCityId={cityId} selectedCityName={cityName} />
     </div>
   )
