@@ -21,7 +21,9 @@ export default function Details() {
     return (
         <div>
             <div className="selections flex justify-center gap-6 z-10">
+             
                 <CitySelection selectedCity={selectedCity} setSelectedCity={setSelectedCity} />
+                
                 <MealSelection setSelectedMeal={setSelectedMeal} selectedMeal={selectedMeal} />
             </div>
             <div className="flex justify-center">

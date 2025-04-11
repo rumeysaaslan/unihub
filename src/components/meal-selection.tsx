@@ -10,7 +10,7 @@ export function MealSelection({ selectedMeal, setSelectedMeal }:Props) {
     return (
         <div className="flex space-x-1">
             <Label htmlFor="mealSelection">Kahvaltı</Label>
-            <Switch style={{marginTop:"7px"}} checked={selectedMeal==="Dinner"} onCheckedChange={(checked) => { setSelectedMeal(checked?"Dinner":"Breakfast") }} id="mealSelection" />
+            <Switch style={{marginTop:"9px"}} checked={selectedMeal==="Dinner"} onCheckedChange={(checked) => { setSelectedMeal(checked?"Dinner":"Breakfast") }} id="mealSelection" />
             <Label htmlFor="mealSelection">Akşam Yemeği</Label>
         </div>
     )

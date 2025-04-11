@@ -52,9 +52,9 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
 
 
     return (
-        <div className="">
+        <div  >
             <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
+                <PopoverTrigger  asChild>
                     <Button
                         variant="outline"
                         role="combobox"
@@ -64,11 +64,11 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
                         {selectedCity
                             ? cities.find((city) => city.name === selectedCity.name)?.name
                             : "il secimi yapin"}
-                        <ChevronsUpDown className="opacity-50" />
-                    </Button>
+                        <ChevronsUpDown className="opacity-50 " />
+                    </Button  >
                 </PopoverTrigger>
                 <PopoverContent className="w-[200px] p-0">
-                    <Command>
+                    <Command >
                         <CommandInput placeholder="il secimi yapin" />
                         <CommandList>
                             <CommandEmpty>Şehir bulunamadı.</CommandEmpty>
@@ -91,7 +91,7 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
                                         {city.name}
                                         <Check
                                             className={cn(
-                                                "ml-auto",
+                                                "ml-auto ",
                                                 selectedCity?.name === city.name ? "opacity-100" : "opacity-0"
                                             )}
                                         />
