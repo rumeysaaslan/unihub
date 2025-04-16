@@ -67,7 +67,7 @@ function Profile() {
 
         <div className='flex flex-row space-y-3 space-x-3 ml-5'>
           <Avatar>
-            <AvatarImage src="Hype. (1).png" alt="logo" />
+            <AvatarImage src="public/Blue White Bold Playful Kids Clothing Logo.png" alt="logo" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <h1 style={{ color: '#ff3131', marginTop: '5px' }}>Websitemiz Hakkinda</h1>

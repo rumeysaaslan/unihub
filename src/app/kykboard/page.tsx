@@ -1,13 +1,6 @@
-import etkinlik1 from "../../../public/etkinlik 2.jpeg"
-import etkinlik2 from "../../../public/etkinlik.jpeg"
+
 import * as React from "react"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
+
 
 
 import {
@@ -18,12 +11,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import Image from "next/image"
+
 
 
 
 function KykBoard() {
-  const etkinlikler=[etkinlik1,etkinlik2]
+
   return (
     <div style={{display:"flex", flexDirection:"row", backgroundColor:'#efe8dd' }} className='space-x-30 justify-center  h-screen ' >
       <Card className="w-[350px]">
@@ -62,29 +55,11 @@ function KykBoard() {
         </div>
         </div>
       
-        <Carousel className="w-full mt-10  max-w-xs">
-      <CarouselContent>
-        {etkinlikler.map((etkinlik, index) => (
-          <CarouselItem key={index}>
-            <div className="p-1">
-            <h1 style={{marginLeft:'70px', marginBottom:'10px'}}>Yurt Etkinlik Panosu</h1>
-              <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <Image src={etkinlik} alt={""} ></Image>
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+     
       </CardContent>
       <CardFooter className="flex justify-between">
       </CardFooter>
     </Card>
-    
     </div>
   )
 }
