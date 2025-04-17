@@ -3,12 +3,38 @@ import React from 'react'
 
 function Navbar() {
   return (
-    <div className='flex justify-center gap-4 md:gap-11 p-1 mb-3.5'>
-      <Link style={{ justifyContent: 'center', alignItems: 'center', border: '2px solid #efe8dd', borderRadius: '20px', padding: '4px' }} href={'/'}> <span style={{ color: '#ff3131', fontFamily: 'bristol' }}>KYk Menü</span></Link>
-      <Link style={{ justifyContent: 'center', alignItems: 'center', border: '2px solid #efe8dd', borderRadius: '20px', padding: '4px' }} href={'/ihtiyaclar'}> <span style={{ color: '#ff3131', fontFamily: 'bristol' }}>İhtiyaçlar</span></Link>
-      <Link style={{ justifyContent: 'center', alignItems: 'center', border: '2px solid #efe8dd', borderRadius: '20px', padding: '4px' }} href={"/kykboard"}><span style={{ color: '#ff3131', fontFamily: 'bristol' }}>Kyk Pano</span></Link>
-      <Link style={{ justifyContent: 'center', alignItems: 'center', border: '2px solid #efe8dd', borderRadius: '20px', padding: '4px' }} href={"/profil"}><span style={{ color: '#ff3131', fontFamily: 'bristol' }}>Profil</span></Link>
-    </div>
+    <div className="flex justify-center flex-wrap gap-3 md:gap-6 p-4 mb-5">
+    <Link
+      href="/"
+      className="px-4 py-2 rounded-full border-2 border-[#efe8dd] text-[#ff3131] font-semibold font-[bristol] hover:bg-[#ff3131]/10 hover:shadow-md transition"
+    >
+      🍽 KYK Menü
+    </Link>
+    <Link
+      href="/ihtiyaclar"
+      className="px-4 py-2 rounded-full border-2 border-[#efe8dd] text-[#ff3131] font-semibold font-[bristol] hover:bg-[#ff3131]/10 hover:shadow-md transition"
+    >
+      🎒 KYK İhtiyaçlar
+    </Link>
+    <Link
+      href="/link"
+      className="px-4 py-2 rounded-full border-2 border-[#efe8dd] text-[#ff3131] font-semibold font-[bristol] hover:bg-[#ff3131]/10 hover:shadow-md transition"
+    >
+      🔗 KYK Link
+    </Link>
+    <Link
+      href="/eglence"
+      className="px-4 py-2 rounded-full border-2 border-[#efe8dd] text-[#ff3131] font-semibold font-[bristol] hover:bg-[#ff3131]/10 hover:shadow-md transition"
+    >
+      🎉 KYK Eğlence
+    </Link>
+    <Link
+      href="/profil"
+      className="px-4 py-2 rounded-full border-2 border-[#efe8dd] text-[#ff3131] font-semibold font-[bristol] hover:bg-[#ff3131]/10 hover:shadow-md transition"
+    >
+      👤 Profil
+    </Link>
+  </div>
   )
 }
 
