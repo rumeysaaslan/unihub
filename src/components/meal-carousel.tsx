@@ -44,33 +44,49 @@ export function MealCarousel({ selectedMeal, selectedCityId }: Props) {
   }, [selectedCityId, supabase])
 
   return (
-    <Carousel className="w-full max-w-xs">
-      <CarouselContent>
-        {meal.length === 0 && <CarouselItem >
-          <div className="p-1">
-            <Card>
-              <CardContent className="flex aspect-square items-center justify-center p-6">
-                <span>VERI YOK</span>
-              </CardContent>
-            </Card>
-          </div>
-        </CarouselItem>}
-        {meal?.map((m, index) => (
-          <CarouselItem key={index}>
-            <div className="p-1">
-              <Card>
-                <CardContent className="flex aspect-square  items-center flex-col justify-center p-6">
-                  <span className="text-2xl text-center pb-2 font-semibold">{m.date}</span>
-                  <span className="text-xl ">{m[selectedMeal === "Breakfast" ? "Kahvalti" : "Aksam_yemegi"].split(",").filter(x => x !== "").map((m, ind) => (<li key={ind}>{m}</li>))}</span>
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+    <Carousel className="w-full max-w-xs ml-4 mt-6 md:max-w-md lg:max-w-lg">
+  <CarouselContent>
+    {meal.length === 0 && (
+      <CarouselItem>
+        <div className="p-2">
+          <Card className="border-dashed border-2 border-gray-300">
+            <CardContent className="flex aspect-square items-center justify-center p-6">
+              <span className="text-center text-gray-500 text-lg font-medium">Veri bulunamadı</span>
+            </CardContent>
+          </Card>
+        </div>
+      </CarouselItem>
+    )}
+
+    {meal?.map((m, index) => (
+      <CarouselItem key={index}>
+        <div className="p-2">
+          <Card className="shadow-md border border-gray-200 bg-gradient-to-br from-blue-100 via-white to-blue-200">
+            <CardContent className="flex aspect-square items-center flex-col justify-center p-6 space-y-4">
+              {/* Tarih Başlığı */}
+              <span className="text-2xl font-bold text-center tracking-wide text-gray-800 underline decoration-blue-300 decoration-2 underline-offset-4">
+                {m.date}
+              </span>
+
+              {/* Yemek Listesi */}
+              <ul className="text-left text-gray-700 text-[15px] leading-relaxed tracking-wide font-medium space-y-1 list-disc list-inside">
+                {m[selectedMeal === "Breakfast" ? "Kahvalti" : "Aksam_yemegi"]
+                  .split(",")
+                  .filter((x) => x.trim() !== "")
+                  .map((item, ind) => (
+                    <li key={ind}>{item.trim()}</li>
+                  ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </CarouselItem>
+    ))}
+  </CarouselContent>
+
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
   )
 }
 

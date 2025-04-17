@@ -52,56 +52,66 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
 
 
     return (
-        <div  >
-            <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger  asChild>
-                    <Button
-                        variant="outline"
-                        role="combobox"
-                        aria-expanded={open}
-                        className="w-auto justify-between"
+        <div className="flex justify-center">
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="w-44 md:w-60 px-4 py-2 text-base font-small bg-gradient-to-r from-blue-100 via-white to-blue-50 shadow-md rounded-xl border  mt-3 border-blue-200 hover:shadow-lg transition-all flex items-center justify-between"
+            >
+              <div className="flex items-center gap-2">
+                
+                <span className="truncate">
+                  {selectedCity
+                    ? cities.find((city) => city.name === selectedCity.name)?.name
+                    : "İl seçimi yapın"}
+                </span>
+              </div>
+              <ChevronsUpDown className="h-4 w-4 opacity-60" />
+            </Button>
+          </PopoverTrigger>
+      
+          <PopoverContent className="w-44 md:w-60 p-0 mt-2 rounded-xl border border-blue-200 shadow-xl bg-white">
+            <Command>
+              <CommandInput
+                placeholder="İl ara..."
+                className="px-3 py-2 focus:ring-0 focus:outline-none border-b border-gray-100"
+              />
+              <CommandList>
+                <CommandEmpty className="p-3 text-sm text-gray-500">Şehir bulunamadı.</CommandEmpty>
+                <CommandGroup>
+                  {cities.map((city) => (
+                    <CommandItem
+                      key={city.name}
+                      value={city.name}
+                      onSelect={(currentValue) => {
+                        if (selectedCity?.name !== currentValue) {
+                          const city = cities.find((x) => x.name === currentValue);
+                          if (city) {
+                            setSelectedCity(city);
+                            setOpen(false);
+                            localStorage.setItem("selectedCity", JSON.stringify(city));
+                          }
+                        }
+                      }}
+                      className="cursor-pointer px-3 py-2 hover:bg-blue-100 transition-colors"
                     >
-                        {selectedCity
-                            ? cities.find((city) => city.name === selectedCity.name)?.name
-                            : "il secimi yapin"}
-                        <ChevronsUpDown className="opacity-50 " />
-                    </Button  >
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                    <Command >
-                        <CommandInput placeholder="il secimi yapin" />
-                        <CommandList>
-                            <CommandEmpty>Şehir bulunamadı.</CommandEmpty>
-                            <CommandGroup>
-                                {cities.map((city) => (
-                                    <CommandItem
-                                        key={city.name}
-                                        value={city.name}
-                                        onSelect={(currentValue) => {
-                                            if (selectedCity?.name !== currentValue) {
-                                                const city = cities.find(x => x.name == currentValue)
-                                                if (city) {
-                                                    setSelectedCity(city)
-                                                    setOpen(false)
-                                                    localStorage.setItem("selectedCity", JSON.stringify(city))
-                                                }
-                                            }
-                                        }}
-                                    >
-                                        {city.name}
-                                        <Check
-                                            className={cn(
-                                                "ml-auto ",
-                                                selectedCity?.name === city.name ? "opacity-100" : "opacity-0"
-                                            )}
-                                        />
-                                    </CommandItem>
-                                ))}
-                            </CommandGroup>
-                        </CommandList>
-                    </Command>
-                </PopoverContent>
-            </Popover>
-        </div>
+                      {city.name}
+                      <Check
+                        className={cn(
+                          "ml-auto text-blue-600 transition-opacity",
+                          selectedCity?.name === city.name ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      </div>
     )
 }
