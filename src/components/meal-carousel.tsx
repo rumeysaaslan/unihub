@@ -61,24 +61,22 @@ export function MealCarousel({ selectedMeal, selectedCityId }: Props) {
     {meal?.map((m, index) => (
       <CarouselItem key={index}>
         <div className="p-2">
-          <Card className="shadow-md border border-gray-200 bg-gradient-to-br from-blue-100 via-white to-blue-200">
-            <CardContent className="flex aspect-square items-center flex-col justify-center p-6 space-y-4">
-              {/* Tarih Başlığı */}
-              <span className="text-2xl font-bold text-center tracking-wide text-gray-800 underline decoration-blue-300 decoration-2 underline-offset-4">
-                {m.date}
-              </span>
+        <Card className="shadow-md border border-gray-200 bg-gradient-to-br from-[#fff0f0] via-[#ffdada] to-[#ff9494]">
+  <CardContent className="flex aspect-square items-center flex-col justify-center p-6 space-y-4">
+    <span className="text-2xl font-bold text-center tracking-wide text-gray-800 underline decoration-pink-300 decoration-2 underline-offset-4">
+      {m.date}
+    </span>
 
-              {/* Yemek Listesi */}
-              <ul className="text-left text-gray-700 text-[15px] leading-relaxed tracking-wide font-medium space-y-1 list-disc list-inside">
-                {m[selectedMeal === "Breakfast" ? "Kahvalti" : "Aksam_yemegi"]
-                  .split(",")
-                  .filter((x) => x.trim() !== "")
-                  .map((item, ind) => (
-                    <li key={ind}>{item.trim()}</li>
-                  ))}
-              </ul>
-            </CardContent>
-          </Card>
+    <ul className="text-left text-gray-700 text-[15px] leading-relaxed tracking-wide font-medium space-y-1 list-disc list-inside">
+      {m[selectedMeal === "Breakfast" ? "Kahvalti" : "Aksam_yemegi"]
+        .split(",")
+        .filter((x) => x.trim() !== "")
+        .map((item, ind) => (
+          <li key={ind}>{item.trim()}</li>
+        ))}
+    </ul>
+  </CardContent>
+</Card>
         </div>
       </CarouselItem>
     ))}
