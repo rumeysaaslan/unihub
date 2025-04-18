@@ -1,6 +1,6 @@
 import Image from "next/image"
 import React from 'react'
-import Logo from "../../public/Blue White Bold Playful Kids Clothing Logo.png"
+import Logo from "../../public/yeniii.png"
 
 
 import Link from "next/link"

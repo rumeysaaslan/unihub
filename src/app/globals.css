@@ -129,12 +129,15 @@
 
   body {
     @apply bg-background text-foreground;
-    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.3) 1px, transparent 1px),
-                      radial-gradient(circle, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
-                      radial-gradient(circle, rgba(255, 169, 249, 100) 1px, transparent 1px),  /* Pembe desen daha belirgin */
-                      radial-gradient(circle, rgba(255, 247, 173, 100) 1px, transparent 1px);  /* Sarı desen daha belirgin */
-    background-size: 20px 20px, 40px 40px, 30px 30px, 50px 50px; /* Farklı boyutlarda 4 farklı desen */
-    background-position: 0 0, 10px 10px, 15px 15px, 25px 25px; /* Desenin daha zengin ve uyumlu olmasını sağlar */
-    opacity: 1;  /* Opaklık efekti daha güçlü yapıldı */
+    background: linear-gradient(
+      135deg,
+      #f1f3f4 0%, /* Sıcak gri */
+      #c7d0b3 50%, /* Zeytin yeşili tonları */
+      #a8b29d 100% /* Hafif koyu zeytin rengi */
+    );
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }
+  

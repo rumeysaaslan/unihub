@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 const mediaItems = [
-  // 🎬 FİLMLER
   {
     type: "film",
     title: "Dead Poets Society",
@@ -112,7 +111,8 @@ const mediaItems = [
     image: "https://www.iskultur.com.tr/webp/2020/01/icimizdekiseytab.jpg",
     link: "https://tr.wikipedia.org/wiki/İçimizdeki_Şeytan"
   }
-]
+];
+
 
 export default function MediaGallery() {
   const [activeType, setActiveType] = useState("film");
@@ -120,47 +120,50 @@ export default function MediaGallery() {
   const filteredItems = mediaItems.filter((item) => item.type === activeType);
 
   return (
-    <div className="flex flex-col items-center justify-center p-1 bg-[#efe8dd] min-h-screen space-y-4">
-           <h2 className="text-2xl font-bold text-center mb-6">✨ Bugünün Mood’u: Film mi Kitap mı? </h2>
-      <div className="space-x-4">
-        <button
-          className={`px-4 py-2 rounded-full ${
-            activeType === "kitap" ? "bg-pink-300" : "bg-white"
-          }`}
-          onClick={() => setActiveType("kitap")}
-        >
-          📚 Kitap Modu
-        </button>
-        <button
-          className={`px-4 py-2 rounded-full ${
-            activeType === "film" ? "bg-pink-300" : "bg-white"
-          }`}
-          onClick={() => setActiveType("film")}
-        >
-          🎬 Film Modu
-        </button>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredItems.map((item, index) => (
-          <Link key={index} href={item.link} target="_blank">
-            <div className="bg-white rounded-2xl shadow-md p-4 hover:shadow-lg transition duration-300 cursor-pointer w-72">
-              <div className="relative w-full h-96 mb-3">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-xl"
-                  unoptimized
-                />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-              <p className="text-sm text-gray-600">{item.description}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
+    <div className="flex flex-col items-center justify-center px-4 py-6 min-h-screen space-y-6 ">
+    <h2 className="text-2xl md:text-3xl font-bold text-center text-[#2d2d2d]">
+      ✨ Bugünün Mood’u: Film mi Kitap mı?
+    </h2>
+  
+    <div className="flex flex-col sm:flex-row gap-3">
+      <button
+        className={`px-6 py-2 rounded-full text-sm font-medium transition ${
+          activeType === "kitap" ? "bg-[#c7f0d8] text-[#2d2d2d]" : "bg-white text-gray-800"
+        }`}
+        onClick={() => setActiveType("kitap")}
+      >
+        📚 Kitap Modu
+      </button>
+      <button
+        className={`px-6 py-2 rounded-full text-sm font-medium transition ${
+          activeType === "film" ? "bg-[#c7f0d8] text-[#2d2d2d]" : "bg-white text-gray-800"
+        }`}
+        onClick={() => setActiveType("film")}
+      >
+        🎬 Film Modu
+      </button>
     </div>
+  
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-screen-lg">
+      {filteredItems.map((item, index) => (
+        <Link key={index} href={item.link} target="_blank">
+          <div className="bg-white rounded-2xl shadow-md p-4 hover:shadow-lg transition duration-300 cursor-pointer w-full">
+            <div className="relative w-full h-72 mb-3">
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="rounded-xl object-cover"
+                unoptimized
+              />
+            </div>
+            <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
+            <p className="text-sm text-gray-600">{item.description}</p>
+          </div>
+        </Link>
+      ))}
+    </div>
+  </div>
   );
 }
+ 

@@ -61,9 +61,9 @@ export function MealCarousel({ selectedMeal, selectedCityId }: Props) {
     {meal?.map((m, index) => (
       <CarouselItem key={index}>
         <div className="p-2">
-        <Card className="shadow-md border border-gray-200 bg-gradient-to-br from-[#fff0f0] via-[#ffdada] to-[#ff9494]">
+        <Card className="shadow-md border border-yellow-100 bg-[#fcfdf2]">
   <CardContent className="flex aspect-square items-center flex-col justify-center p-6 space-y-4">
-    <span className="text-2xl font-bold text-center tracking-wide text-gray-800 underline decoration-pink-300 decoration-2 underline-offset-4">
+    <span className="text-2xl font-bold text-center tracking-wide text-gray-800 underline decoration-yellow-300 decoration-2 underline-offset-4">
       {m.date}
     </span>
 
