@@ -36,7 +36,7 @@ export function CitySelection({ selectedCity, setSelectedCity }: Props) {
 
     React.useEffect(() => {
         const getCities = async () => {
-            const { data, error } = await supabase.from('cities').select("*")
+            const { data, error } = await supabase.from('cities').select("*").eq("is_active", "true")
             console.log(data)
             if (data) {
                 setCities(data)
