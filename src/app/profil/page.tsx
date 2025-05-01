@@ -42,20 +42,20 @@ function Profile() {
             Burada seçtiğiniz şehir ve KYK seçiminize göre bilgiler düzenlenir.
           </CardDescription>
         </CardHeader>
-  
+
         <div className="px-4 md:px-6 py-4 space-y-5">
           {/* Şehir Seçimi */}
           <div className="space-y-2">
             <Label className="text-sm font-medium text-[#6cbf6d]">Varsayılan şehirinizi seçin</Label>
             <CitySelection selectedCity={selectedCity} setSelectedCity={setSelectedCity} />
           </div>
-  
+
           {/* Tema Ayarı */}
           <div className="flex items-center gap-3">
             <Label className="text-sm font-medium text-[#6cbf6d]">Tema Ayarları:</Label>
             <ModeToggle />
           </div>
-  
+
           {/* Menü & Diğer Bilgiler */}
           <div className="space-y-3">
             {/* Günlük Menüler */}
@@ -66,7 +66,7 @@ function Profile() {
             <CardDescription className="ml-7 text-sm text-gray-600">
               Her gün güncel yemek listesi.
             </CardDescription>
-  
+
             {/* Şehir Seçimi */}
             <div className="flex items-center gap-3 mt-3">
               <IoLocationOutline className="text-[#FFEBB0] text-xl" />
@@ -75,7 +75,7 @@ function Profile() {
             <CardDescription className="ml-7 text-sm text-gray-600">
               Burada seçtiğiniz şehir ve KYK seçiminize göre bilgiler düzenlenir.
             </CardDescription>
-  
+
             {/* Yurt İhtiyaçları */}
             <div className="flex items-center gap-3 mt-3">
               <Link
@@ -84,22 +84,22 @@ function Profile() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-[#6cbf6d] font-medium"
               >
-                <MdShoppingCart className="text-xl text-[#FFEBB0]"   />
+                <MdShoppingCart className="text-xl text-[#FFEBB0]" />
                 <Label className="text-sm">Yurt İhtiyaçlarınızı Kontrol Edin</Label>
               </Link>
             </div>
             <CardDescription className="ml-7 text-sm text-gray-600">
               Yurt hayatını kolaylaştıran temel ihtiyaç ürünlerine hızlı erişim sağlamak için tıklayın.
             </CardDescription>
-  
+
             {/* Eğlence ve Aktivite */}
             <div className="flex items-center gap-3 mt-3">
               <Link href="#" className="flex items-center gap-2 text-[#FFEBB0] font-medium">
-              <MdMenuBook className="text-xl" />
+                <MdMenuBook className="text-xl" />
                 <Label className="text-sm text-[#6cbf6d]">Kitap Modu</Label>
               </Link>
               <Link href="#" className="flex items-center gap-2 text-[#FFEBB0] font-medium">
-              <MdMovie className="text-xl" />
+                <MdMovie className="text-xl" />
                 <Label className="text-sm text-[#6cbf6d]">Film Modu</Label>
               </Link>
             </div>
@@ -108,7 +108,7 @@ function Profile() {
             </CardDescription>
           </div>
         </div>
-  
+
         <CardFooter className="p-4 text-right">
           {/* Footer alanı boş bırakıldı, istenirse buton eklenebilir */}
         </CardFooter>

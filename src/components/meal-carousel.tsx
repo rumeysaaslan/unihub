@@ -31,6 +31,8 @@ export function MealCarousel({ selectedMeal, selectedCityId }: Props) {
       if (selectedCityId < 1) return;
       const now = new Date();
       const dateAsString = now.toISOString()
+ 
+  
       const { data, error } = await supabase.from("meals").select("*").eq("city_id", selectedCityId).order("date").gte("date", dateAsString)
       if (data) {
         setMeal(data)
