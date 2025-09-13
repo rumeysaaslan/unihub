@@ -50,6 +50,7 @@ function Profile() {
             <CitySelection selectedCity={selectedCity} setSelectedCity={setSelectedCity} />
           </div>
 
+
           {/* Tema Ayarı */}
           <div className="flex items-center gap-3">
             <Label className="text-sm font-medium text-[#6cbf6d]">Tema Ayarları:</Label>
