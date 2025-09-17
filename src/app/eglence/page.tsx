@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useMemo, useState } from "react";
 import "./page.css";
-type Film = { id: string; title: string; year?: string; note: string; quote?: string };
+
 const FILM_CATEGORIES = [
   { 
     key: "dram", 
@@ -38,7 +38,6 @@ const FILM_CATEGORIES = [
   },
 ];
 
-type Book = { id: string; title: string; author?: string; note: string; quote?: string };
 const CATEGORIES = [
   { 
     key: "kisisel", 
