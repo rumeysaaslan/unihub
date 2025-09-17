@@ -1,169 +1,214 @@
-'use client'
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
-
-const mediaItems = [
-  {
-    type: "film",
-    title: "Dead Poets Society",
-    description: "“Carpe Diem” ruhunu iliklerine kadar hissettiren unutulmaz bir film.",
-    image: "https://m.media-amazon.com/images/I/617-2I06oGL.jpg",
-    link: "https://tr.wikipedia.org/wiki/Ölü_Ozanlar_Derneği"
+"use client"
+import React, { useEffect, useMemo, useState } from "react";
+import "./page.css";
+type Film = { id: string; title: string; year?: string; note: string; quote?: string };
+const FILM_CATEGORIES = [
+  { 
+    key: "dram", 
+    label: "Dram", 
+    icon: "🎭", 
+    films: [
+      { id: "dp", title: "Dead Poets Society", note: "Carpe Diem ruhunu hissettirir, öğrencilerin hayata bakışını değiştirir.", quote: "Carpe Diem!" },
+      { id: "tpoh", title: "The Pursuit of Happyness", note: "Azim ve mücadele öyküsü, asla pes etmemeyi öğretir.", quote: "Never give up." },
+      { id: "fg", title: "Forrest Gump", note: "Hayatın iniş çıkışlarını sade ve ilham verici şekilde anlatır.", quote: "Run, Forrest, run!" },
+      { id: "tte", title: "The Theory of Everything", note: "Stephen Hawking’in mücadele ve bilimle dolu yaşamı.", quote: "However bad life may seem, there is always something you can do." },
+    ],
+  },
+  { 
+    key: "komedi", 
+    label: "Komedi", 
+    icon: "😂", 
+    films: [
+      { id: "3i", title: "3 Idiots", note: "Eğlenceli ve düşündürücü üniversite hikayesi.", quote: "All is well!" },
+      { id: "pk", title: "PK", note: "Toplumsal eleştiriyi mizahla harmanlayan bir film.", quote: "Confused... always confused." },
+      { id: "sm", title: "Superbad", note: "Gençlik ve dostluğun eğlenceli bir anlatısı.", quote: "I am McLovin!" },
+      { id: "tt", title: "The Truman Show", note: "Gerçeklik ve özgürlüğü sorgulatan, gülümseten bir hikaye.", quote: "Good morning, and in case I don't see ya..." },
+    ],
   },
   {
-    type: "film",
-    title: "Little Women (2019)",
-    description: "Sıcak ve nostaljik bir dönem filmi: kız kardeşlik ve büyümek üzerine.",
-    image: "https://tr.web.img3.acsta.net/pictures/18/06/19/12/41/0798806.jpg",
-    link: "https://tr.wikipedia.org/wiki/Küçük_Kadınlar_(2019_film)"
+    key: "kdrama",
+    label: "K-Drama",
+    icon: "🇰🇷",
+    films: [
+      { id: "cloy", title: "Crash Landing on You", note: "İki farklı dünyanın insanlarının yollarının kesiştiği aşk hikayesi.", quote: "You’re my destiny." },
+      { id: "ic", title: "Itaewon Class", note: "Gençlerin adalet arayışı ve girişimcilik hikayesi.", quote: "My dream is bigger than your prejudice." },
+      { id: "su", title: "Start-Up", note: "Genç girişimcilerin teknolojiyle dolu umut hikayesi.", quote: "Follow your dreams, not people." },
+      { id: "tb", title: "True Beauty", note: "Özgüven ve kendini kabul üzerine eğlenceli bir gençlik dizisi.", quote: "Beauty begins the moment you decide to be yourself." },
+    ],
   },
-  {
-    type: "film",
-    title: "Midnight in Paris",
-    description: "Zaman yolculuğu + Paris’in büyülü sokaklarında nostalji dolu bir gece.",
-    image: "https://tr.web.img3.acsta.net/medias/nmedia/18/86/05/04/19819885.jpg",
-    link: "https://tr.wikipedia.org/wiki/Paris'te_Bir_Gece_Yarısı"
-  },
-  {
-    type: "film",
-    title: "3 Idiots",
-    description: "Üniversite sistemi ve dostluk üzerine bol kahkahalı, düşündürücü bir yapım.",
-    image: "https://img.kitapyurdu.com/v1/getImage/fn:2306482/wh:true/wi:500",
-    link: "https://tr.wikipedia.org/wiki/3_Aptal"
-  },
-  {
-    type: "film",
-    title: "The Pursuit of Happyness",
-    description: "Azim, mücadele ve baba-oğul ilişkisi üzerine ilham verici bir film.",
-    image: "https://m.media-amazon.com/images/M/MV5BMTQ5NjQ0NDI3NF5BMl5BanBnXkFtZTcwNDI0MjEzMw@@._V1_FMjpg_UX1000_.jpg",
-    link: "https://tr.wikipedia.org/wiki/Umut_Işığı"
-  },
-  {
-    type: "film",
-    title: "The Theory of Everything",
-    description: "Stephen Hawking’in hayatı ve bilime olan tutkusu üzerine etkileyici bir film.",
-    image: "https://m.media-amazon.com/images/S/pv-target-images/ab0c20b963b3b1425fa85953f593624494b4de97976644f629117af2ad3a3cb6.jpg",
-    link: "https://tr.wikipedia.org/wiki/Her_Şeyin_Teorisi"
-  },
-  {
-    type: "film",
-    title: "Forrest Gump",
-    description: "Hayatın iniş çıkışlarını sade ama çarpıcı şekilde anlatan klasik bir film.",
-    image: "https://m.media-amazon.com/images/I/71xzEu8NuJL.jpg",
-    link: "https://tr.wikipedia.org/wiki/Forrest_Gump"
-  },
-  {
-    type: "film",
-    title: "Inside Out",
-    description: "Duyguların iç dünyası üzerine eğlenceli ve duygusal bir animasyon.",
-    image: "https://m.media-amazon.com/images/M/MV5BOTgxMDQwMDk0OF5BMl5BanBnXkFtZTgwNjU5OTg2NDE@._V1_.jpg",
-    link: "https://tr.wikipedia.org/wiki/Ters_Yüz_(film)"
-  },
-
-  // 📚 KİTAPLAR
-  {
-    type: "kitap",
-    title: "Simyacı",
-    description: "Kendini bulma yolculuğunda ilham verici bir kitap.",
-    image: "https://covers.storytel.com/jpg-640/9789180128025.edabbb72-cc9b-4312-8f34-d55bb1f033c5?optimize=high&quality=70",
-    link: "https://www.goodreads.com/kitap/show/865.The_Alchemist"
-  },
-  {
-    type: "kitap",
-    title: "Martı – Jonathan Livingston",
-    description: "Özgürlük, farklılık ve azim üzerine kısa ama derin bir öykü.",
-    image: "https://edebiyathocam.com.tr/wp-content/uploads/2024/03/marti.png",
-    link: "https://tr.wikipedia.org/wiki/Martı_(kitap)"
-  },
-  {
-    type: "kitap",
-    title: "Küçük Prens",
-    description: "Herkesin çocuk kalbine dokunan sade ama derin bir hikaye.",
-    image: "https://www.canyayinlari.com/productimages/118452/big/9789750724435_front_cover.jpg",
-    link: "https://tr.wikipedia.org/wiki/Küçük_Prens"
-  },
-  {
-    type: "kitap",
-    title: "Hayvan Çiftliği",
-    description: "Güç ilişkilerini hicveden kısa ve çarpıcı bir klasik.",
-    image: "https://img.kitapyurdu.com/v1/getImage/fn:11447395/wh:true/wi:800",
-    link: "https://tr.wikipedia.org/wiki/Hayvan_Çiftliği"
-  },
-  {
-    type: "kitap",
-    title: "Şeker Portakalı",
-    description: "Zezé'nin çocukluğundan, hayallerinden ve kalbinden izler taşıyan dokunaklı bir hikâye.",
-    image: "https://img.kitapyurdu.com/v1/getImage/fn:11462950/wh:true/wi:800",
-    link: "https://tr.wikipedia.org/wiki/Şeker_Portakalı_(roman)"
-  },
-  {
-    type: "kitap",
-    title: "Sofie’nin Dünyası",
-    description: "Felsefeye giriş için sürükleyici ve öğretici bir roman.",
-    image: "https://img.kitapyurdu.com/v1/getImage/fn:11783714/wh:true/wi:800",
-    link: "https://tr.wikipedia.org/wiki/Sofie'nin_Dünyası"
-  },
-  {
-    type: "kitap",
-    title: "İçimizdeki Şeytan",
-    description: "Sabahattin Ali’den birey-toplum ilişkisini sorgulatan bir başyapıt.",
-    image: "https://www.iskultur.com.tr/webp/2020/01/icimizdekiseytab.jpg",
-    link: "https://tr.wikipedia.org/wiki/İçimizdeki_Şeytan"
-  }
 ];
 
+type Book = { id: string; title: string; author?: string; note: string; quote?: string };
+const CATEGORIES = [
+  { 
+    key: "kisisel", 
+    label: "Kişisel Gelişim", 
+    icon: "🌱", 
+    books: [
+      { id: "aa", title: "Atomik Alışkanlıklar", note: "Küçük alışkanlıklarla büyük değişim sağlar.", quote: "Sistemlerin kadar iyisin." },
+      { id: "np", title: "Şimdinin Gücü", note: "Anda kalmayı öğreten, zihinsel huzur sağlayan eser.", quote: "Anda kal!" },
+      { id: "ag", title: "Alışkanlıkların Gücü", note: "Günlük rutinlerin hayatımızı nasıl şekillendirdiğini açıklar.", quote: "Rutinler karakterini oluşturur." },
+      { id: "4h", title: "4 Saatlik Hafta", note: "Daha verimli çalışmayı ve zamanı yönetmeyi öğreten kitap.", quote: "Az çalış, akıllı yaşa." },
+    ],
+  },
+  { 
+    key: "psikoloji", 
+    label: "Psikoloji", 
+    icon: "🧠", 
+    books: [
+      { id: "md", title: "Mutluluk Bilimi", note: "Pozitif psikolojiyle mutluluğa bakış açısı kazandırır.", quote: "Mutluluk bir seçimdir." },
+      { id: "sg", title: "Sosyal Hayvan", note: "İnsan davranışlarını anlamaya yönelik derin bir yolculuk.", quote: "İnsan toplumsal bir varlıktır." },
+      { id: "db", title: "Düşün ve Başar", note: "Zihinsel gücü ve inancı vurgular.", quote: "İnan, başarabilirsin." },
+      { id: "ie", title: "İkigai", note: "Japonların uzun yaşam sırrı: yaşam amacı.", quote: "Her sabah kalkmak için bir neden bul." },
+    ],
+  },
+];
 
 export default function MediaGallery() {
-  const [activeType, setActiveType] = useState("film");
+  const [activeType, setActiveType] = useState<"film" | "kitap">("film");
+  const [activeCategoryKey, setActiveCategoryKey] = useState(CATEGORIES[0].key);
+  const [readSet, setReadSet] = useState<Set<string>>(new Set());
+  const [activeFilmCategoryKey, setActiveFilmCategoryKey] = useState(FILM_CATEGORIES[0].key);
+  const [watchedSet, setWatchedSet] = useState<Set<string>>(new Set());
 
-  const filteredItems = mediaItems.filter((item) => item.type === activeType);
+  // 🔹 Mount olduğunda localStorage'dan oku
+  useEffect(() => {
+    const storedRead = localStorage.getItem("READ_BOOKS");
+    const storedWatched = localStorage.getItem("WATCHED_FILMS");
+    if (storedRead) setReadSet(new Set(JSON.parse(storedRead)));
+    if (storedWatched) setWatchedSet(new Set(JSON.parse(storedWatched)));
+  }, []);
+
+  // 🔹 Değiştikçe localStorage'a yaz
+  useEffect(() => {
+    localStorage.setItem("READ_BOOKS", JSON.stringify([...readSet]));
+  }, [readSet]);
+
+  useEffect(() => {
+    localStorage.setItem("WATCHED_FILMS", JSON.stringify([...watchedSet]));
+  }, [watchedSet]);
+
+  // aktif kategori bulma
+  const activeCategory = useMemo(
+    () => CATEGORIES.find((c) => c.key === activeCategoryKey) || CATEGORIES[0],
+    [activeCategoryKey]
+  );
+  const activeFilmCategory = useMemo(
+    () => FILM_CATEGORIES.find((c) => c.key === activeFilmCategoryKey) || FILM_CATEGORIES[0],
+    [activeFilmCategoryKey]
+  );
+
+  // ilerleme hesaplama
+  const totalBooks = useMemo(() => CATEGORIES.reduce((acc, c) => acc + c.books.length, 0), []);
+  const totalFilms = useMemo(() => FILM_CATEGORIES.reduce((acc, c) => acc + c.films.length, 0), []);
+
+  const readCount = readSet.size;
+  const watchedCount = watchedSet.size;
+
+  const progressBooks = totalBooks ? (readCount / totalBooks) * 100 : 0;
+  const progressFilms = totalFilms ? (watchedCount / totalFilms) * 100 : 0;
 
   return (
-    <div className="flex flex-col items-center justify-center px-4 py-6 min-h-screen space-y-6 ">
-    <h2 className="text-2xl md:text-3xl font-bold text-center text-[#2d2d2d]">
-      ✨ Bugünün Mood’u: Film mi Kitap mı?
-    </h2>
-  
-    <div className="flex flex-col sm:flex-row gap-3">
-      <button
-        className={`px-6 py-2 rounded-full text-sm font-medium transition ${
-          activeType === "kitap" ? "bg-[#c7f0d8] text-[#2d2d2d]" : "bg-white text-gray-800"
-        }`}
-        onClick={() => setActiveType("kitap")}
-      >
-        📚 Kitap Modu
-      </button>
-      <button
-        className={`px-6 py-2 rounded-full text-sm font-medium transition ${
-          activeType === "film" ? "bg-[#c7f0d8] text-[#2d2d2d]" : "bg-white text-gray-800"
-        }`}
-        onClick={() => setActiveType("film")}
-      >
-        🎬 Film Modu
-      </button>
-    </div>
-  
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-screen-lg">
-      {filteredItems.map((item, index) => (
-        <Link key={index} href={item.link} target="_blank">
-          <div className="bg-white rounded-2xl shadow-md p-4 hover:shadow-lg transition duration-300 cursor-pointer w-full">
-            <div className="relative w-full h-72 mb-3">
-              <Image
-                src={item.image}
-                alt={item.title}
-                fill
-                className="rounded-xl object-cover"
-                unoptimized
-              />
+    <div className="gallery-container">
+      <h2 className="heading">✨ Bugünün Mood’u: Film mi Kitap mı?</h2>
+
+      {/* Toggle */}
+      <div className="button-row">
+        <button onClick={() => setActiveType("kitap")} className={`tab-btn ${activeType==="kitap" ? "active" : ""}`}>📚 Kitap Modu</button>
+        <button onClick={() => setActiveType("film")} className={`tab-btn ${activeType==="film" ? "active" : ""}`}>🎬 Film Modu</button>
+      </div>
+
+      {/* Film */}
+      {activeType === "film" && (
+        <div>
+          <div className="progress-card">
+            <p className="progress-title">İzleme İlerlemesi</p>
+            <div className="progress-bar">
+              <div className="progress-fill" style={{width: `${progressFilms}%`}} />
             </div>
-            <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
-            <p className="text-sm text-gray-600">{item.description}</p>
+            <p className="progress-text">{watchedCount}/{totalFilms} film izlendi 🎉</p>
           </div>
-        </Link>
-      ))}
+
+          <div className="chips-row">
+            {FILM_CATEGORIES.map((cat) => (
+              <button
+                key={cat.key}
+                onClick={() => setActiveFilmCategoryKey(cat.key)}
+                className={`chip ${activeFilmCategoryKey===cat.key ? "active" : ""}`}
+              >
+                {cat.icon} {cat.label}
+              </button>
+            ))}
+          </div>
+
+          {activeFilmCategory.films.map((f) => {
+            const isWatched = watchedSet.has(f.id);
+            return (
+              <div key={f.id} className="card">
+                <h3 className="card-title">{f.title}</h3>
+                <p className="card-note">• {f.note}</p>
+                {f.quote && <p className="card-quote">“{f.quote}”</p>}
+                <button
+                  onClick={() => {
+                    const next = new Set(watchedSet);
+                    if (isWatched) next.delete(f.id); else next.add(f.id);
+                    setWatchedSet(next);
+                  }}
+                  className={`toggle-btn ${isWatched ? "active" : ""}`}
+                >
+                  {isWatched ? "İzlendi ✓" : "İzlenecek +"}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Kitap */}
+      {activeType === "kitap" && (
+        <div>
+          <div className="progress-card">
+            <p className="progress-title">Okuma İlerlemesi</p>
+            <div className="progress-bar">
+              <div className="progress-fill" style={{width: `${progressBooks}%`}} />
+            </div>
+            <p className="progress-text">{readCount}/{totalBooks} kitap okundu 🎉</p>
+          </div>
+
+          <div className="chips-row">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.key}
+                onClick={() => setActiveCategoryKey(cat.key)}
+                className={`chip ${activeCategoryKey===cat.key ? "active" : ""}`}
+              >
+                {cat.icon} {cat.label}
+              </button>
+            ))}
+          </div>
+
+          {activeCategory.books.map((b) => {
+            const isRead = readSet.has(b.id);
+            return (
+              <div key={b.id} className="card">
+                <h3 className="card-title">{b.title}</h3>
+                <p className="card-note">• {b.note}</p>
+                {b.quote && <p className="card-quote">“{b.quote}”</p>}
+                <button
+                  onClick={() => {
+                    const next = new Set(readSet);
+                    if (isRead) next.delete(b.id); else next.add(b.id);
+                    setReadSet(next);
+                  }}
+                  className={`toggle-btn ${isRead ? "active" : ""}`}
+                >
+                  {isRead ? "Okundu ✓" : "Okunacak +"}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
-  </div>
   );
 }
- 

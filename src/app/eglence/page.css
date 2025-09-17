@@ -1,0 +1,113 @@
+.gallery-container {
+  background: linear-gradient(#f1f3f4, #c7d0b3, #a8b29d);
+  min-height: 100vh;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.heading {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+  color: #1f2937;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  background: #ffffffaa;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: #16a34a;
+  color: #fff;
+}
+
+.progress-card {
+  background: #ffffffcc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.progress-title {
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.progress-bar {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #16a34a;
+}
+
+.progress-text {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.chips-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.chip {
+  background: #ffffffaa;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.chip.active {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: #fff;
+}
+
+.card {
+  background: #ffffffcc;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.card-note {
+  color: #374151;
+}
+
+.card-quote {
+  font-style: italic;
+  margin-top: 6px;
+  color: #4b5563;
+}
