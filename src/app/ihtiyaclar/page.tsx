@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useEffect } from "react";
 import  { useState } from "react";
 import "./page.css";
 
@@ -19,7 +19,7 @@ interface NeedsList {
   categories: Category[];
 }
 
-const lists: NeedsList[] = [
+const initialLists: NeedsList[] = [
   {
     type: "kiz",
     title: "Kız Öğrenciler İçin İhtiyaç Listesi",
@@ -164,9 +164,27 @@ const lists: NeedsList[] = [
   },
 ];
 
+
 export default function Needs() {
-  const [kategori, setKategori] = useState<"kiz" | "erkek">("kiz");
-  const [data, setData] = useState<NeedsList[]>(lists);
+  const [kategori, setKategori] = useState<"kiz" | "erkek">("kiz")
+  const [data, setData] = useState<NeedsList[]>(initialLists)
+
+  // İlk açılışta localStorage’dan oku
+  useEffect(() => {
+    const stored = localStorage.getItem("needs-data")
+    if (stored) {
+      try {
+        setData(JSON.parse(stored))
+      } catch {
+        setData(initialLists)
+      }
+    }
+  }, [])
+
+  // data her değiştiğinde kaydet
+  useEffect(() => {
+    localStorage.setItem("needs-data", JSON.stringify(data))
+  }, [data])
 
   const handleToggle = (catIndex: number, itemIndex: number) => {
     setData((prev) =>
@@ -187,10 +205,10 @@ export default function Needs() {
             }
           : list
       )
-    );
-  };
+    )
+  }
 
-  const currentList = data.find((l) => l.type === kategori);
+  const currentList = data.find((l) => l.type === kategori)
 
   return (
     <div className="needs-container">
@@ -228,5 +246,5 @@ export default function Needs() {
         </div>
       ))}
     </div>
-  );
+  )
 }
