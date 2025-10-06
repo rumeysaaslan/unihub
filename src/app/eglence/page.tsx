@@ -2,6 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./page.css";
 import VarMisinYokMusun from "@/components/VarMisinYokMusun"; // 🎮 oyun bileşeni
+import { motion, AnimatePresence } from "framer-motion";
 
 const FILM_CATEGORIES = [
   {
@@ -54,6 +55,7 @@ const CATEGORIES = [
 ];
 
 export default function MediaGallery() {
+  const [gameFullScreen, setGameFullScreen] = useState(false);
   const [activeType, setActiveType] = useState<"film" | "kitap" | "oyun">("film");
   const [activeCategoryKey, setActiveCategoryKey] = useState(CATEGORIES[0].key);
   const [activeFilmCategoryKey, setActiveFilmCategoryKey] = useState(FILM_CATEGORIES[0].key);
@@ -210,10 +212,49 @@ export default function MediaGallery() {
 
       {/* === 🎮 Oyun === */}
       {activeType === "oyun" && (
-        <div className="game-section">
-          <VarMisinYokMusun />
-        </div>
+        <>
+          {!gameFullScreen && (
+            <div className="game-section">
+              <button
+                onClick={() => setGameFullScreen(true)}
+                className="enter-game-btn"
+              >
+                🎮 Oyuna Başla
+              </button>
+            </div>
+          )}
+
+          {gameFullScreen && (
+            <div className="fixed inset-0 z-50 bg-black">
+              {/* Geri butonu */}
+             <AnimatePresence>
+  {gameFullScreen && (
+    <motion.button
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      onClick={() => {
+        const clickSound = new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_6be1d34793.mp3?filename=click-124467.mp3");
+        clickSound.volume = 0.5;
+        clickSound.play().catch(() => {});
+        setGameFullScreen(false);
+      }}
+      className="absolute top-4 left-4 z-50 text-white bg-slate-800/70 hover:bg-slate-700 px-4 py-2 rounded-xl border border-slate-600 shadow transition"
+    >
+      ← Geri Dön
+    </motion.button>
+  )}
+</AnimatePresence>
+
+              {/* Oyun bileşeni */}
+              <div className="h-full overflow-auto">
+                <VarMisinYokMusun />
+              </div>
+            </div>
+          )}
+        </>
       )}
-    </div>
-  );
+
+    </div>)
 }
