@@ -1,58 +1,124 @@
-
-import * as React from "react"
-
-
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import Link from "next/link"
-
-
-
+"use client";
+import * as React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 function KykBoard() {
+  const panVideos = [
+    { src: "/video-1759739346-1.MP4" },
+    { src: "/video-1759762238-1.MP4" },
+    { src: "/video-1759762440-1.MP4" },
+    { src: "/video-1759762641-1.MP4" },
+  ];
+
+  const blenderImages = [
+    "/blender1.jpeg",
+    "/blender2.jpeg",
+    "/blender3.jpeg",
+     "/blender4.jpeg",
+  ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "row" }} className="space-x-4 justify-center  p-4 ">
-    <Card className=" w-full sm:w-[350px] bg-white rounded-xl shadow-sm p-4">
-      <CardHeader>
-        <CardTitle style={{ color: '#6cbf6d' }}>KYK LİNK</CardTitle>
-        <CardDescription>
-          Yurt hayatını kolaylaştıran temel ihtiyaç ürünlerine hızlı erişim. İlk günden eksiksiz başla.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Link
-          href="https://ty.gl/5wpwefo2hwe3i"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: 'inline-block',
-            backgroundColor: '#A3D9A5', // Pastel yeşili tonları
-            color: '#2d2d2d', // Koyu gri metin rengi
-            padding: '12px 24px',
-            borderRadius: '15px',
-            textDecoration: 'none',
-            fontWeight: 'bold',
-            fontFamily: 'cursive',
-            textAlign: 'center',
-          }}
-        >
-          ✨ 𝐘𝐮𝐫𝐭 𝐬𝐞𝐫𝐮̈𝐯𝐞𝐧𝐢𝐧𝐢 𝐤𝐨𝐥𝐚𝐲𝐚𝐬̧𝐭𝐢𝐫𝐚𝐜𝐚𝐤 𝐭𝐮̈𝐦 𝐮̈𝐫𝐮̈𝐧𝐥𝐞𝐫 𝐛𝐮 𝐥𝐢𝐧𝐤𝐭𝐞! 🧺🎀
-        </Link>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        {/* Footer content, if needed */}
-      </CardFooter>
-    </Card>
-  </div>
-  )
+    <div className="flex flex-col items-center space-y-10 p-6 bg-gradient-to-b from-white to-green-50 min-h-screen">
+
+      {/* 🍳 Tencere Bölümü */}
+      <section className="w-full max-w-4xl space-y-5">
+        {/* Üst Fotoğraf */}
+          {/* Başlık & Açıklama */}
+        <div className="text-center mt-2">
+          <h2 className="text-2xl font-bold text-green-700 mb-1">🍳 Çok Amaçlı Tencere</h2>
+          <p className="text-gray-600 text-sm italic">
+            Yurt mutfağında yemek, makarna, hatta kek bile yapabilirsin!  
+            Az yer kaplar, çok iş yapar 💚
+          </p>
+        </div>
+        <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-lg">
+          <Image
+            src="/17808066-1740172714160(1).jpeg"
+            alt="Çok Amaçlı Tencere"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+
+      
+
+        {/* 4 Video Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
+          {panVideos.map((v, i) => (
+            <div
+              key={i}
+              className="relative aspect-[9/16] w-full rounded-xl overflow-hidden shadow-md hover:shadow-lg transition"
+            >
+              <video
+                src={v.src}
+                controls
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 🥤 El Blendırı Bölümü */}
+      <section className="w-full max-w-4xl space-y-5">
+        <div className="text-center mt-6">
+          <h2 className="text-2xl font-bold text-green-700 mb-1">🥤 El Blendırı</h2>
+          <p className="text-gray-600 text-sm italic">
+            Sabahları detox, akşamları milkshake 💖  
+            Yurt hayatında vitamin dolu içecekler yapmak için harika 🌿
+          </p>
+        </div>
+
+        {/* Fotoğraf Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
+          {blenderImages.map((src, i) => (
+            <div
+              key={i}
+              className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md hover:scale-[1.03] transition"
+            >
+              <Image src={src} alt={`Blender ${i + 1}`} fill className="object-cover" />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 🌸 Alt Bilgi Kartı */}
+      <Card className="w-full sm:w-[400px] bg-white rounded-2xl shadow-sm border border-green-100 mt-6">
+        <CardHeader>
+          <CardTitle style={{ color: "#6cbf6d" }}>KYK LİNK</CardTitle>
+          <CardDescription>
+            Yurt hayatını kolaylaştıran pratik ürünlere hemen ulaş 💕  
+            Her şey elinin altında olsun! 🧺
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent className="flex flex-col items-center space-y-3">
+          <Link
+            href="https://ty.gl/5wpwefo2hwe3i"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-green-200 hover:bg-green-300 text-gray-900 font-bold py-2 px-5 rounded-xl transition text-center"
+          >
+            ✨ Ürünleri Gör
+          </Link>
+
+          <Link
+            href="https://www.instagram.com/rumeyscode"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-pink-200 hover:bg-pink-300 text-gray-900 font-semibold py-2 px-5 rounded-xl transition text-center"
+          >
+            💖 Instagram Profilime Git
+          </Link>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
 
-export default KykBoard
+export default KykBoard;
