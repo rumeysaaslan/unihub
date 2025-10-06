@@ -17,26 +17,38 @@ function KykBoard() {
   const instagramUsername = "rumeyscode";
 
   const [showNote, setShowNote] = React.useState(false);
+  const [activeVideo, setActiveVideo] = React.useState<number | null>(null);
 
-  // 💖 Instagram yönlendirme
+  // 💖 Instagram yönlendirme (tüm tarayıcılarda sorunsuz)
   const openInstagram = () => {
-    const appLink = `instagram://user?username=${instagramUsername}`;
-    const webLink = `https://www.instagram.com/${instagramUsername}/`;
+    const username = instagramUsername;
+    const appLink = `instagram://user?username=${username}`;
+    const webLink = `https://www.instagram.com/${username}/`;
 
-    const start = Date.now();
+    const now = Date.now();
     const timeout = setTimeout(() => {
-      if (Date.now() - start < 1600) window.location.href = webLink;
+      if (Date.now() - now < 1500) window.location.href = webLink;
     }, 1000);
 
-    window.location.href = appLink;
+    try {
+      window.location.href = appLink;
+    } catch {
+      window.location.href = webLink;
+    }
+
     window.addEventListener("blur", () => clearTimeout(timeout));
   };
 
-  // 📹 Çift tıklamada mesaj + yönlendirme
+  // 📹 Çift tıklamada tatlı not + yönlendirme
   const handleDoubleClick = () => {
     setShowNote(true);
     setTimeout(() => setShowNote(false), 1600);
     setTimeout(() => openInstagram(), 1200);
+  };
+
+  // 🔊 Tek tıklamada sesi açma
+  const handleSingleClick = (index: number) => {
+    setActiveVideo((prev) => (prev === index ? null : index)); // aynı videoya tıklarsa kapat
   };
 
   return (
@@ -69,30 +81,30 @@ function KykBoard() {
           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition" />
         </a>
 
-     {/* 🎥 4 Video */}
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
-  {panVideos.map((v, i) => (
-    <div
-      key={i}
-      onDoubleClick={handleDoubleClick}
-      className="relative aspect-[9/16] w-full rounded-xl overflow-hidden shadow-md hover:shadow-lg transition group cursor-pointer"
-    >
-      <video
-        src={v.src}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        poster={`${v.src}#t=0.5`}
-        className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition"
-      />
-      <div className="absolute bottom-2 right-2 text-[10px] text-white bg-black/40 px-2 py-1 rounded-md opacity-70">
-        📲 2 kere tıkla 💖
-      </div>
-    </div>
-  ))}
-</div>
+        {/* 🎥 4 Video */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
+          {panVideos.map((v, i) => (
+            <div
+              key={i}
+              onClick={() => handleSingleClick(i)}
+              onDoubleClick={handleDoubleClick}
+              className="relative aspect-[9/16] w-full rounded-xl overflow-hidden shadow-md hover:shadow-lg transition group cursor-pointer"
+            >
+              <video
+                src={v.src}
+                autoPlay
+                loop
+                playsInline
+                preload="auto"
+                muted={activeVideo !== i}
+                className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition"
+              />
+              <div className="absolute bottom-2 right-2 text-[10px] text-white bg-black/40 px-2 py-1 rounded-md opacity-70">
+                {activeVideo === i ? "🔊 Ses açık" : "📲 2 kere tıkla 💖"}
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* 🥤 El Blendırı Bölümü */}
