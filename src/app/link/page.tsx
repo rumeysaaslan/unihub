@@ -1,7 +1,6 @@
 "use client";
 import * as React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 function KykBoard() {
@@ -12,20 +11,31 @@ function KykBoard() {
     { src: "/video-1759762641-1.MP4" },
   ];
 
-  const blenderImages = [
-    "/blender1.jpeg",
-    "/blender2.jpeg",
-    "/blender3.jpeg",
-     "/blender4.jpeg",
-  ];
+  const blenderImages = ["/blender1.jpeg", "/blender2.jpeg", "/blender3.jpeg", "/blender4.jpeg"];
+
+  // 💖 Instagram yönlendirme fonksiyonu
+  const openInstagram = () => {
+    const username = "rumeyscode"; // 🔹 senin kullanıcı adın
+    const appLink = `instagram://user?username=${username}`;
+    const webLink = `https://www.instagram.com/${username}/`;
+
+    // Uygulama açmayı dene
+    const start = Date.now();
+    const timeout = setTimeout(() => {
+      // Eğer 1.5 saniye içinde app açılmazsa web versiyonuna yönlendir
+      if (Date.now() - start < 1600) window.location.href = webLink;
+    }, 1000);
+
+    window.location.href = appLink;
+
+    window.addEventListener("blur", () => clearTimeout(timeout));
+  };
 
   return (
     <div className="flex flex-col items-center space-y-10 p-6 bg-gradient-to-b from-white to-green-50 min-h-screen">
 
       {/* 🍳 Tencere Bölümü */}
       <section className="w-full max-w-4xl space-y-5">
-        {/* Üst Fotoğraf */}
-          {/* Başlık & Açıklama */}
         <div className="text-center mt-2">
           <h2 className="text-2xl font-bold text-green-700 mb-1">🍳 Çok Amaçlı Tencere</h2>
           <p className="text-gray-600 text-sm italic">
@@ -33,6 +43,8 @@ function KykBoard() {
             Az yer kaplar, çok iş yapar 💚
           </p>
         </div>
+
+        {/* Üst Fotoğraf */}
         <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-lg">
           <Image
             src="/17808066-1740172714160(1).jpeg"
@@ -43,9 +55,7 @@ function KykBoard() {
           />
         </div>
 
-      
-
-        {/* 4 Video Grid */}
+        {/* 🎥 4 Video */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
           {panVideos.map((v, i) => (
             <div
@@ -98,23 +108,22 @@ function KykBoard() {
         </CardHeader>
 
         <CardContent className="flex flex-col items-center space-y-3">
-          <Link
+          <a
             href="https://ty.gl/5wpwefo2hwe3i"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-green-200 hover:bg-green-300 text-gray-900 font-bold py-2 px-5 rounded-xl transition text-center"
           >
             ✨ Ürünleri Gör
-          </Link>
+          </a>
 
-          <Link
-            href="https://www.instagram.com/rumeyscode"
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* 💖 Instagram yönlendirmesi */}
+          <button
+            onClick={openInstagram}
             className="inline-block bg-pink-200 hover:bg-pink-300 text-gray-900 font-semibold py-2 px-5 rounded-xl transition text-center"
           >
             💖 Instagram Profilime Git
-          </Link>
+          </button>
         </CardContent>
       </Card>
     </div>
