@@ -2,6 +2,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion, AnimatePresence } from "framer-motion";
 
 function KykBoard() {
   const panVideos = [
@@ -12,23 +13,30 @@ function KykBoard() {
   ];
 
   const blenderImages = ["/blender1.jpeg", "/blender2.jpeg", "/blender3.jpeg", "/blender4.jpeg"];
+  const trendyolLink = "https://ty.gl/5wpwefo2hwe3i";
+  const instagramUsername = "rumeyscode";
 
-  // 💖 Instagram yönlendirme fonksiyonu
+  const [showNote, setShowNote] = React.useState(false);
+
+  // 💖 Instagram yönlendirme
   const openInstagram = () => {
-    const username = "rumeyscode"; // 🔹 senin kullanıcı adın
-    const appLink = `instagram://user?username=${username}`;
-    const webLink = `https://www.instagram.com/${username}/`;
+    const appLink = `instagram://user?username=${instagramUsername}`;
+    const webLink = `https://www.instagram.com/${instagramUsername}/`;
 
-    // Uygulama açmayı dene
     const start = Date.now();
     const timeout = setTimeout(() => {
-      // Eğer 1.5 saniye içinde app açılmazsa web versiyonuna yönlendir
       if (Date.now() - start < 1600) window.location.href = webLink;
     }, 1000);
 
     window.location.href = appLink;
-
     window.addEventListener("blur", () => clearTimeout(timeout));
+  };
+
+  // 📹 Çift tıklamada mesaj + yönlendirme
+  const handleDoubleClick = () => {
+    setShowNote(true);
+    setTimeout(() => setShowNote(false), 1600);
+    setTimeout(() => openInstagram(), 1200);
   };
 
   return (
@@ -45,30 +53,40 @@ function KykBoard() {
         </div>
 
         {/* Üst Fotoğraf */}
-        <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-lg">
+        <a
+          href={trendyolLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-lg group"
+        >
           <Image
             src="/17808066-1740172714160(1).jpeg"
             alt="Çok Amaçlı Tencere"
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
             priority
           />
-        </div>
+          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition" />
+        </a>
 
         {/* 🎥 4 Video */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
           {panVideos.map((v, i) => (
             <div
               key={i}
-              className="relative aspect-[9/16] w-full rounded-xl overflow-hidden shadow-md hover:shadow-lg transition"
+              onDoubleClick={handleDoubleClick}
+              className="relative aspect-[9/16] w-full rounded-xl overflow-hidden shadow-md hover:shadow-lg transition group cursor-pointer"
             >
               <video
                 src={v.src}
                 controls
                 muted
                 playsInline
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition"
               />
+              <div className="absolute bottom-2 right-2 text-[10px] text-white bg-black/40 px-2 py-1 rounded-md opacity-70">
+                📲 2 kere tıkla 💖
+              </div>
             </div>
           ))}
         </div>
@@ -84,15 +102,19 @@ function KykBoard() {
           </p>
         </div>
 
-        {/* Fotoğraf Grid */}
+        {/* 📸 Fotoğraf Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
           {blenderImages.map((src, i) => (
-            <div
+            <a
               key={i}
-              className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md hover:scale-[1.03] transition"
+              href={trendyolLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md hover:scale-[1.03] transition group"
             >
               <Image src={src} alt={`Blender ${i + 1}`} fill className="object-cover" />
-            </div>
+              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition" />
+            </a>
           ))}
         </div>
       </section>
@@ -109,7 +131,7 @@ function KykBoard() {
 
         <CardContent className="flex flex-col items-center space-y-3">
           <a
-            href="https://ty.gl/5wpwefo2hwe3i"
+            href={trendyolLink}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-green-200 hover:bg-green-300 text-gray-900 font-bold py-2 px-5 rounded-xl transition text-center"
@@ -117,17 +139,31 @@ function KykBoard() {
             ✨ Ürünleri Gör
           </a>
 
-          {/* 💖 Instagram yönlendirmesi */}
           <button
             onClick={openInstagram}
             className="inline-block bg-pink-200 hover:bg-pink-300 text-gray-900 font-semibold py-2 px-5 rounded-xl transition text-center"
           >
             💖 Instagram Profilime Git
           </button>
-
-        
         </CardContent>
       </Card>
+
+      {/* 💬 Tatlı “Beğen & Kaydet” Notu */}
+      <AnimatePresence>
+        {showNote && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            transition={{ duration: 0.4 }}
+            className="fixed bottom-16 inset-x-0 flex justify-center z-50"
+          >
+            <div className="bg-pink-100 text-pink-700 font-semibold px-5 py-2 rounded-2xl shadow-lg border border-pink-200 text-sm">
+              💬 Beğenmeyi ve kaydetmeyi unutma 💖
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
