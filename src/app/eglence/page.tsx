@@ -1,93 +1,75 @@
-"use client"
+"use client";
 import React, { useEffect, useMemo, useState } from "react";
 import "./page.css";
+import VarMisinYokMusun from "@/components/VarMisinYokMusun"; // 🎮 oyun bileşeni
 
 const FILM_CATEGORIES = [
-  { 
-    key: "dram", 
-    label: "Dram", 
-    icon: "🎭", 
+  {
+    key: "dram",
+    label: "Dram",
+    icon: "🎭",
     films: [
-      { id: "dp", title: "Dead Poets Society", note: "Carpe Diem ruhunu hissettirir, öğrencilerin hayata bakışını değiştirir.", quote: "Carpe Diem!" },
-      { id: "tpoh", title: "The Pursuit of Happyness", note: "Azim ve mücadele öyküsü, asla pes etmemeyi öğretir.", quote: "Never give up." },
-      { id: "fg", title: "Forrest Gump", note: "Hayatın iniş çıkışlarını sade ve ilham verici şekilde anlatır.", quote: "Run, Forrest, run!" },
-      { id: "tte", title: "The Theory of Everything", note: "Stephen Hawking’in mücadele ve bilimle dolu yaşamı.", quote: "However bad life may seem, there is always something you can do." },
-    ],
-  },
-  { 
-    key: "komedi", 
-    label: "Komedi", 
-    icon: "😂", 
-    films: [
-      { id: "3i", title: "3 Idiots", note: "Eğlenceli ve düşündürücü üniversite hikayesi.", quote: "All is well!" },
-      { id: "pk", title: "PK", note: "Toplumsal eleştiriyi mizahla harmanlayan bir film.", quote: "Confused... always confused." },
-      { id: "sm", title: "Superbad", note: "Gençlik ve dostluğun eğlenceli bir anlatısı.", quote: "I am McLovin!" },
-      { id: "tt", title: "The Truman Show", note: "Gerçeklik ve özgürlüğü sorgulatan, gülümseten bir hikaye.", quote: "Good morning, and in case I don't see ya..." },
+      { id: "dp", title: "Dead Poets Society", note: "Carpe Diem ruhunu hissettirir.", quote: "Carpe Diem!" },
+      { id: "tpoh", title: "The Pursuit of Happyness", note: "Azim ve mücadele öyküsü.", quote: "Never give up." },
+      { id: "fg", title: "Forrest Gump", note: "Hayatın iniş çıkışlarını sade anlatır.", quote: "Run, Forrest, run!" },
+      { id: "tte", title: "The Theory of Everything", note: "Hawking’in mücadele hikayesi.", quote: "However bad life may seem..." },
     ],
   },
   {
-    key: "kdrama",
-    label: "K-Drama",
-    icon: "🇰🇷",
+    key: "komedi",
+    label: "Komedi",
+    icon: "😂",
     films: [
-      { id: "cloy", title: "Crash Landing on You", note: "İki farklı dünyanın insanlarının yollarının kesiştiği aşk hikayesi.", quote: "You’re my destiny." },
-      { id: "ic", title: "Itaewon Class", note: "Gençlerin adalet arayışı ve girişimcilik hikayesi.", quote: "My dream is bigger than your prejudice." },
-      { id: "su", title: "Start-Up", note: "Genç girişimcilerin teknolojiyle dolu umut hikayesi.", quote: "Follow your dreams, not people." },
-      { id: "tb", title: "True Beauty", note: "Özgüven ve kendini kabul üzerine eğlenceli bir gençlik dizisi.", quote: "Beauty begins the moment you decide to be yourself." },
+      { id: "3i", title: "3 Idiots", note: "Eğlenceli ve düşündürücü.", quote: "All is well!" },
+      { id: "pk", title: "PK", note: "Toplumsal eleştiri + mizah.", quote: "Confused... always confused." },
+      { id: "sm", title: "Superbad", note: "Gençlik & dostluk.", quote: "I am McLovin!" },
+      { id: "tt", title: "The Truman Show", note: "Gerçeklik/özgürlük.", quote: "Good morning..." },
     ],
   },
 ];
 
 const CATEGORIES = [
-  { 
-    key: "kisisel", 
-    label: "Kişisel Gelişim", 
-    icon: "🌱", 
+  {
+    key: "kisisel",
+    label: "Kişisel Gelişim",
+    icon: "🌱",
     books: [
-      { id: "aa", title: "Atomik Alışkanlıklar", note: "Küçük alışkanlıklarla büyük değişim sağlar.", quote: "Sistemlerin kadar iyisin." },
-      { id: "np", title: "Şimdinin Gücü", note: "Anda kalmayı öğreten, zihinsel huzur sağlayan eser.", quote: "Anda kal!" },
-      { id: "ag", title: "Alışkanlıkların Gücü", note: "Günlük rutinlerin hayatımızı nasıl şekillendirdiğini açıklar.", quote: "Rutinler karakterini oluşturur." },
-      { id: "4h", title: "4 Saatlik Hafta", note: "Daha verimli çalışmayı ve zamanı yönetmeyi öğreten kitap.", quote: "Az çalış, akıllı yaşa." },
+      { id: "aa", title: "Atomik Alışkanlıklar", note: "Küçük alışkanlıklar → büyük sonuç", quote: "Sistemlerin kadar iyisin." },
+      { id: "np", title: "Şimdinin Gücü", note: "Anda kalma", quote: "Anda kal!" },
+      { id: "ag", title: "Alışkanlıkların Gücü", note: "Rutinlerin etkisi", quote: "Rutinler karakterini oluşturur." },
+      { id: "4h", title: "4 Saatlik Hafta", note: "Verimlilik", quote: "Az çalış, akıllı yaşa." },
     ],
   },
-  { 
-    key: "psikoloji", 
-    label: "Psikoloji", 
-    icon: "🧠", 
+  {
+    key: "psikoloji",
+    label: "Psikoloji",
+    icon: "🧠",
     books: [
-      { id: "md", title: "Mutluluk Bilimi", note: "Pozitif psikolojiyle mutluluğa bakış açısı kazandırır.", quote: "Mutluluk bir seçimdir." },
-      { id: "sg", title: "Sosyal Hayvan", note: "İnsan davranışlarını anlamaya yönelik derin bir yolculuk.", quote: "İnsan toplumsal bir varlıktır." },
-      { id: "db", title: "Düşün ve Başar", note: "Zihinsel gücü ve inancı vurgular.", quote: "İnan, başarabilirsin." },
-      { id: "ie", title: "İkigai", note: "Japonların uzun yaşam sırrı: yaşam amacı.", quote: "Her sabah kalkmak için bir neden bul." },
+      { id: "md", title: "Mutluluk Bilimi", note: "Pozitif psikoloji", quote: "Mutluluk bir seçimdir." },
+      { id: "sg", title: "Sosyal Hayvan", note: "İnsan davranışları", quote: "İnsan toplumsal bir varlıktır." },
+      { id: "db", title: "Düşün ve Başar", note: "Zihinsel güç", quote: "İnan, başarabilirsin." },
+      { id: "ie", title: "İkigai", note: "Yaşam amacı", quote: "Her sabah kalkmak için bir neden bul." },
     ],
   },
 ];
 
 export default function MediaGallery() {
-  const [activeType, setActiveType] = useState<"film" | "kitap">("film");
+  const [activeType, setActiveType] = useState<"film" | "kitap" | "oyun">("film");
   const [activeCategoryKey, setActiveCategoryKey] = useState(CATEGORIES[0].key);
-  const [readSet, setReadSet] = useState<Set<string>>(new Set());
   const [activeFilmCategoryKey, setActiveFilmCategoryKey] = useState(FILM_CATEGORIES[0].key);
+  const [readSet, setReadSet] = useState<Set<string>>(new Set());
   const [watchedSet, setWatchedSet] = useState<Set<string>>(new Set());
 
-  // 🔹 Mount olduğunda localStorage'dan oku
+  // localStorage senkronizasyonu
   useEffect(() => {
     const storedRead = localStorage.getItem("READ_BOOKS");
     const storedWatched = localStorage.getItem("WATCHED_FILMS");
     if (storedRead) setReadSet(new Set(JSON.parse(storedRead)));
     if (storedWatched) setWatchedSet(new Set(JSON.parse(storedWatched)));
   }, []);
+  useEffect(() => localStorage.setItem("READ_BOOKS", JSON.stringify([...readSet])), [readSet]);
+  useEffect(() => localStorage.setItem("WATCHED_FILMS", JSON.stringify([...watchedSet])), [watchedSet]);
 
-  // 🔹 Değiştikçe localStorage'a yaz
-  useEffect(() => {
-    localStorage.setItem("READ_BOOKS", JSON.stringify([...readSet]));
-  }, [readSet]);
-
-  useEffect(() => {
-    localStorage.setItem("WATCHED_FILMS", JSON.stringify([...watchedSet]));
-  }, [watchedSet]);
-
-  // aktif kategori bulma
   const activeCategory = useMemo(
     () => CATEGORIES.find((c) => c.key === activeCategoryKey) || CATEGORIES[0],
     [activeCategoryKey]
@@ -97,35 +79,48 @@ export default function MediaGallery() {
     [activeFilmCategoryKey]
   );
 
-  // ilerleme hesaplama
-  const totalBooks = useMemo(() => CATEGORIES.reduce((acc, c) => acc + c.books.length, 0), []);
-  const totalFilms = useMemo(() => FILM_CATEGORIES.reduce((acc, c) => acc + c.films.length, 0), []);
-
-  const readCount = readSet.size;
-  const watchedCount = watchedSet.size;
-
-  const progressBooks = totalBooks ? (readCount / totalBooks) * 100 : 0;
-  const progressFilms = totalFilms ? (watchedCount / totalFilms) * 100 : 0;
+  const totalBooks = useMemo(() => CATEGORIES.reduce((a, c) => a + c.books.length, 0), []);
+  const totalFilms = useMemo(() => FILM_CATEGORIES.reduce((a, c) => a + c.films.length, 0), []);
+  const progressBooks = totalBooks ? (readSet.size / totalBooks) * 100 : 0;
+  const progressFilms = totalFilms ? (watchedSet.size / totalFilms) * 100 : 0;
 
   return (
     <div className="gallery-container">
-      <h2 className="heading">✨ Bugünün Mood’u: Film mi Kitap mı?</h2>
+      <h2 className="heading">✨ Bugünün Mood’u: Film mi Kitap mı Oyun mu?</h2>
 
-      {/* Toggle */}
+      {/* 🔹 Sekmeler */}
       <div className="button-row">
-        <button onClick={() => setActiveType("kitap")} className={`tab-btn ${activeType==="kitap" ? "active" : ""}`}>📚 Kitap Modu</button>
-        <button onClick={() => setActiveType("film")} className={`tab-btn ${activeType==="film" ? "active" : ""}`}>🎬 Film Modu</button>
+        <button
+          onClick={() => setActiveType("kitap")}
+          className={`tab-btn ${activeType === "kitap" ? "active" : ""}`}
+        >
+          📚 Kitap
+        </button>
+        <button
+          onClick={() => setActiveType("film")}
+          className={`tab-btn ${activeType === "film" ? "active" : ""}`}
+        >
+          🎬 Film
+        </button>
+        <button
+          onClick={() => setActiveType("oyun")}
+          className={`tab-btn ${activeType === "oyun" ? "active" : ""}`}
+        >
+          🎮 Oyun
+        </button>
       </div>
 
-      {/* Film */}
+      {/* === 🎬 Film === */}
       {activeType === "film" && (
         <div>
           <div className="progress-card">
             <p className="progress-title">İzleme İlerlemesi</p>
             <div className="progress-bar">
-              <div className="progress-fill" style={{width: `${progressFilms}%`}} />
+              <div className="progress-fill" style={{ width: `${progressFilms}%` }} />
             </div>
-            <p className="progress-text">{watchedCount}/{totalFilms} film izlendi 🎉</p>
+            <p className="progress-text">
+              {watchedSet.size}/{totalFilms} film izlendi 🎉
+            </p>
           </div>
 
           <div className="chips-row">
@@ -133,7 +128,7 @@ export default function MediaGallery() {
               <button
                 key={cat.key}
                 onClick={() => setActiveFilmCategoryKey(cat.key)}
-                className={`chip ${activeFilmCategoryKey===cat.key ? "active" : ""}`}
+                className={`chip ${activeFilmCategoryKey === cat.key ? "active" : ""}`}
               >
                 {cat.icon} {cat.label}
               </button>
@@ -141,21 +136,22 @@ export default function MediaGallery() {
           </div>
 
           {activeFilmCategory.films.map((f) => {
-            const isWatched = watchedSet.has(f.id);
+            const done = watchedSet.has(f.id);
             return (
               <div key={f.id} className="card">
                 <h3 className="card-title">{f.title}</h3>
                 <p className="card-note">• {f.note}</p>
-                {f.quote && <p className="card-quote">“{f.quote}”</p>}
+                <p className="card-quote">“{f.quote}”</p>
                 <button
+                  className={`toggle-btn ${done ? "active" : ""}`}
                   onClick={() => {
                     const next = new Set(watchedSet);
-                    if (isWatched) next.delete(f.id); else next.add(f.id);
+                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                    done ? next.delete(f.id) : next.add(f.id);
                     setWatchedSet(next);
                   }}
-                  className={`toggle-btn ${isWatched ? "active" : ""}`}
                 >
-                  {isWatched ? "İzlendi ✓" : "İzlenecek +"}
+                  {done ? "İzlendi ✓" : "İzlenecek +"}
                 </button>
               </div>
             );
@@ -163,15 +159,17 @@ export default function MediaGallery() {
         </div>
       )}
 
-      {/* Kitap */}
+      {/* === 📚 Kitap === */}
       {activeType === "kitap" && (
         <div>
           <div className="progress-card">
             <p className="progress-title">Okuma İlerlemesi</p>
             <div className="progress-bar">
-              <div className="progress-fill" style={{width: `${progressBooks}%`}} />
+              <div className="progress-fill" style={{ width: `${progressBooks}%` }} />
             </div>
-            <p className="progress-text">{readCount}/{totalBooks} kitap okundu 🎉</p>
+            <p className="progress-text">
+              {readSet.size}/{totalBooks} kitap okundu 🎉
+            </p>
           </div>
 
           <div className="chips-row">
@@ -179,7 +177,7 @@ export default function MediaGallery() {
               <button
                 key={cat.key}
                 onClick={() => setActiveCategoryKey(cat.key)}
-                className={`chip ${activeCategoryKey===cat.key ? "active" : ""}`}
+                className={`chip ${activeCategoryKey === cat.key ? "active" : ""}`}
               >
                 {cat.icon} {cat.label}
               </button>
@@ -187,25 +185,33 @@ export default function MediaGallery() {
           </div>
 
           {activeCategory.books.map((b) => {
-            const isRead = readSet.has(b.id);
+            const done = readSet.has(b.id);
             return (
               <div key={b.id} className="card">
                 <h3 className="card-title">{b.title}</h3>
                 <p className="card-note">• {b.note}</p>
-                {b.quote && <p className="card-quote">“{b.quote}”</p>}
+                <p className="card-quote">“{b.quote}”</p>
                 <button
+                  className={`toggle-btn ${done ? "active" : ""}`}
                   onClick={() => {
                     const next = new Set(readSet);
-                    if (isRead) next.delete(b.id); else next.add(b.id);
+                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                    done ? next.delete(b.id) : next.add(b.id);
                     setReadSet(next);
                   }}
-                  className={`toggle-btn ${isRead ? "active" : ""}`}
                 >
-                  {isRead ? "Okundu ✓" : "Okunacak +"}
+                  {done ? "Okundu ✓" : "Okunacak +"}
                 </button>
               </div>
             );
           })}
+        </div>
+      )}
+
+      {/* === 🎮 Oyun === */}
+      {activeType === "oyun" && (
+        <div className="game-section">
+          <VarMisinYokMusun />
         </div>
       )}
     </div>
