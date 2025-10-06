@@ -249,7 +249,7 @@ export default function VarMisinYokMusun() {
 
       {/* Üst bar */}
       <header className="relative z-10 max-w-7xl mx-auto px-4 pt-8 pb-3 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">VAR MISIN <span className="text-sky-400">YOK MUSUN</span></h1>
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">VAR MISIN <span className="text-sky-400">YOK MUSUN</span></h1> <span style={{color:'red'}}>!! Telefonu yan tutunca daha keyifli</span>
         <div className="flex items-center gap-3">
           <div className="rounded-2xl bg-slate-800/70 px-4 py-2 shadow-inner border border-slate-700 text-sm">
             Bakiye: <span className={`font-semibold ${balance >= 0 ? "text-emerald-400" : "text-rose-400"}`}>{formatMoney(balance)}</span>
