@@ -7,6 +7,8 @@ import Header from "@/components/header";
 
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import SiteFooter from "@/components/footer";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -62,8 +64,9 @@ export default function RootLayout({
           <main>
             <Header />
             <Navbar />
-
+             
             {children}
+             <SiteFooter />
           </main>
         </ThemeProvider>
         <Analytics />
