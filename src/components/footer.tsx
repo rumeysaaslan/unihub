@@ -50,16 +50,7 @@ export default function SiteFooter() {
                       Ana Sayfa
                     </Link>
                   </li>
-                  <li>
-                    <Link href="/oyun" className="hover:text-green-700 transition">
-                      🎮 Var Mısın Yok Musun?
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/zikirler" className="hover:text-green-700 transition">
-                      Zikir Listesi
-                    </Link>
-                  </li>
+               
                 </ul>
               )}
             </div>
