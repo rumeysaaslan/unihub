@@ -20,7 +20,7 @@ export default function SiteFooter() {
           {/* Logo */}
           <div className="flex items-center gap-2 mb-2">
             <div className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-green-600 text-white text-sm font-bold">
-              KH
+              KYK
             </div>
             <span className="text-base font-semibold text-gray-900">KYK Hub</span>
           </div>
